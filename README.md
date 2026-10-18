@@ -44,7 +44,8 @@ There is no demo program for these problems; the tests are how you check your wo
 
 ## What's here
 
-- `practice.ValidateAvl` — `isValidAvl`, which returns whether a binary tree satisfies both the binary search tree ordering property and the AVL balance property at every node, in one post-order pass. `isValidAvlTwoChecks` answers the same question with two separate checks. The empty tree is valid, and a tree with a duplicate value is not.
-- `practice.BalanceBst` — `buildBalanced`, which builds a height-balanced binary search tree from a sorted list, and `balance`, which rebuilds any binary search tree as a height-balanced one holding the same values. Both run in $O(n)$ and perform no rotations.
+- `practice.ValidateAvl` — `isValidAvl`, which returns whether a binary tree satisfies both the binary search tree ordering property and the AVL balance property at every node. `isValidAvlTwoChecks` answers the same question with two separate checks. The empty tree is valid, and a tree with a duplicate value is not.
+- `practice.BalanceBst` — `buildBalanced`, which builds a height-balanced binary search tree from a sorted list, and `balance`, which rebuilds any binary search tree as a height-balanced one holding the same values.
 - `tree.Node<T>` — the binary-tree node from the tree chapter, with a value and a left and a right child. It is a copy, included so this code compiles and runs on its own.
 - `list.List<T>` and `list.ArrayList<T>` — the List ADT and its array-backed implementation, copied so this code compiles and runs on its own. `balance` uses a list to hold the values between flattening and rebuilding.
+- `practice.ValidateAvlTest`, `practice.ValidateAvlTwoChecksTest`, `practice.ValidateAvlOnePassTest`, and `practice.BalanceBstTest` — tests for the two problems. `ValidateAvlTest` holds the scenarios, and each subclass runs them against one solution.

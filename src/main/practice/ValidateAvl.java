@@ -27,6 +27,7 @@ public final class ValidateAvl {
       return -1;  // height of an empty subtree
     }
 
+    // ordering: the node must fall inside the bounds its ancestors set
     if (min != null && node.value.compareTo(min) <= 0) {
       return INVALID;
     }
@@ -44,11 +45,12 @@ public final class ValidateAvl {
       return INVALID;
     }
 
+    // balance: the two subtree heights may differ by at most one
     if (Math.abs(left - right) > 1) {
       return INVALID;
     }
 
-    return 1 + Math.max(left, right);
+    return 1 + Math.max(left, right);  // this subtree's height
   }
 
   // Same contract as isValidAvl.
