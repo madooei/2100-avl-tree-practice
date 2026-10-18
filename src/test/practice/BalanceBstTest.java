@@ -20,6 +20,11 @@ public class BalanceBstTest {
   public void buildBalancedPicksTheMiddleAsRoot() {
     Node<Integer> root = BalanceBst.buildBalanced(range(20, 80, 10));
     assertEquals(50, root.value);
+  }
+
+  @Test
+  public void buildBalancedPicksTheMiddleOfEachHalfAsChild() {
+    Node<Integer> root = BalanceBst.buildBalanced(range(20, 80, 10));
     assertEquals(30, root.left.value);
     assertEquals(70, root.right.value);
   }
@@ -35,6 +40,13 @@ public class BalanceBstTest {
     for (int n = 1; n <= 40; n++) {
       Node<Integer> root = BalanceBst.buildBalanced(range(1, n, 1));
       assertTrue(isBalanced(root), "n = " + n);
+    }
+  }
+
+  @Test
+  public void buildBalancedHasTheSmallestHeightForEverySize() {
+    for (int n = 1; n <= 40; n++) {
+      Node<Integer> root = BalanceBst.buildBalanced(range(1, n, 1));
       assertEquals(floorLog2(n), height(root), "n = " + n);
     }
   }
@@ -42,32 +54,6 @@ public class BalanceBstTest {
   @Test
   public void balanceOfEmptyTreeIsEmptyTree() {
     assertNull(BalanceBst.balance(null));
-  }
-
-  @Test
-  public void balanceRebuildsARightChain() {
-    Node<Integer> root = rightChain(20, 80, 10);
-    Node<Integer> balanced = BalanceBst.balance(root);
-    assertEquals(50, balanced.value);
-    assertEquals(2, height(balanced));
-    assertTrue(isBalanced(balanced));
-    assertSameValues(range(20, 80, 10), inOrder(balanced));
-  }
-
-  @Test
-  public void balanceRebuildsALeftChain() {
-    // 80 -> 70 -> ... -> 20, each the left child of the last.
-    Node<Integer> root = new Node<>(80);
-    Node<Integer> curr = root;
-    for (int value = 70; value >= 20; value -= 10) {
-      curr.left = new Node<>(value);
-      curr = curr.left;
-    }
-    Node<Integer> balanced = BalanceBst.balance(root);
-    assertEquals(50, balanced.value);
-    assertEquals(2, height(balanced));
-    assertTrue(isBalanced(balanced));
-    assertSameValues(range(20, 80, 10), inOrder(balanced));
   }
 
   @Test
@@ -79,15 +65,46 @@ public class BalanceBstTest {
   }
 
   @Test
-  public void balanceKeepsAnAlreadyBalancedTreeBalanced() {
-    Node<Integer> root = new Node<>(50);
-    root.left = new Node<>(30);
-    root.right = new Node<>(70);
-    root.left.left = new Node<>(20);
-    root.left.right = new Node<>(40);
-    Node<Integer> balanced = BalanceBst.balance(root);
-    assertTrue(isBalanced(balanced));
+  public void balanceOfBalancedTreeIsBalanced() {
+    assertTrue(isBalanced(BalanceBst.balance(balancedTree())));
+  }
+
+  @Test
+  public void balanceOfBalancedTreeKeepsTheValues() {
+    Node<Integer> balanced = BalanceBst.balance(balancedTree());
     assertSameValues(list(20, 30, 40, 50, 70), inOrder(balanced));
+  }
+
+  @Test
+  public void balanceOfRightChainIsBalanced() {
+    assertTrue(isBalanced(BalanceBst.balance(rightChain(20, 80, 10))));
+  }
+
+  @Test
+  public void balanceOfRightChainHasHeightTwo() {
+    assertEquals(2, height(BalanceBst.balance(rightChain(20, 80, 10))));
+  }
+
+  @Test
+  public void balanceOfRightChainKeepsTheValues() {
+    Node<Integer> balanced = BalanceBst.balance(rightChain(20, 80, 10));
+    assertSameValues(range(20, 80, 10), inOrder(balanced));
+  }
+
+  @Test
+  public void balanceOfLeftChainIsBalanced() {
+    assertTrue(isBalanced(BalanceBst.balance(leftChain(80, 20, 10))));
+  }
+
+  @Test
+  public void balanceOfLeftChainHasHeightTwo() {
+    assertEquals(2, height(BalanceBst.balance(leftChain(80, 20, 10))));
+  }
+
+  @Test
+  public void balanceOfLeftChainKeepsTheValues() {
+    Node<Integer> balanced = BalanceBst.balance(leftChain(80, 20, 10));
+    assertSameValues(range(20, 80, 10), inOrder(balanced));
   }
 
   // Returns the list start, start + step, ..., end.
@@ -107,6 +124,16 @@ public class BalanceBstTest {
     return out;
   }
 
+  // Builds 50 with children 30 and 70, and 20 and 40 under 30.
+  private static Node<Integer> balancedTree() {
+    Node<Integer> root = new Node<>(50);
+    root.left = new Node<>(30);
+    root.right = new Node<>(70);
+    root.left.left = new Node<>(20);
+    root.left.right = new Node<>(40);
+    return root;
+  }
+
   // Builds start -> start + step -> ... -> end, each the right child of the last.
   private static Node<Integer> rightChain(int start, int end, int step) {
     Node<Integer> root = new Node<>(start);
@@ -114,6 +141,17 @@ public class BalanceBstTest {
     for (int value = start + step; value <= end; value += step) {
       curr.right = new Node<>(value);
       curr = curr.right;
+    }
+    return root;
+  }
+
+  // Builds start -> start - step -> ... -> end, each the left child of the last.
+  private static Node<Integer> leftChain(int start, int end, int step) {
+    Node<Integer> root = new Node<>(start);
+    Node<Integer> curr = root;
+    for (int value = start - step; value >= end; value -= step) {
+      curr.left = new Node<>(value);
+      curr = curr.left;
     }
     return root;
   }

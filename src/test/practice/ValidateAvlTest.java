@@ -26,13 +26,10 @@ public abstract class ValidateAvlTest {
   }
 
   @Test
-  public void smallValidTreeIsValid() {
-    // 30 with children 20 and 50, and 40 under 50.
-    Node<Integer> root = new Node<>(30);
-    root.left = new Node<>(20);
-    root.right = new Node<>(50);
-    root.right.left = new Node<>(40);
-    assertTrue(isValidAvl(root));
+  public void duplicateValueIsInvalid() {
+    Node<Integer> root = new Node<>(50);
+    root.left = new Node<>(50);
+    assertFalse(isValidAvl(root));
   }
 
   @Test
@@ -45,6 +42,16 @@ public abstract class ValidateAvlTest {
   }
 
   @Test
+  public void smallValidTreeIsValid() {
+    // 30 with children 20 and 50, and 40 under 50.
+    Node<Integer> root = new Node<>(30);
+    root.left = new Node<>(20);
+    root.right = new Node<>(50);
+    root.right.left = new Node<>(40);
+    assertTrue(isValidAvl(root));
+  }
+
+  @Test
   public void balancedButUnorderedIsInvalid() {
     // Every node leans by at most one level, but 60 sits in 50's left subtree.
     Node<Integer> root = new Node<>(50);
@@ -52,26 +59,6 @@ public abstract class ValidateAvlTest {
     root.right = new Node<>(70);
     root.left.right = new Node<>(60);
     assertFalse(isValidAvl(root));
-  }
-
-  @Test
-  public void duplicateValueIsInvalid() {
-    Node<Integer> root = new Node<>(50);
-    root.left = new Node<>(50);
-    assertFalse(isValidAvl(root));
-  }
-
-  @Test
-  public void deeperValidTreeIsValid() {
-    Node<Integer> root = new Node<>(50);
-    root.left = new Node<>(30);
-    root.right = new Node<>(70);
-    root.left.left = new Node<>(20);
-    root.left.right = new Node<>(40);
-    root.right.left = new Node<>(60);
-    root.right.right = new Node<>(80);
-    root.left.left.left = new Node<>(10);
-    assertTrue(isValidAvl(root));
   }
 
   @Test
@@ -98,6 +85,19 @@ public abstract class ValidateAvlTest {
     root.right.right = new Node<>(80);
     root.right.right.right = new Node<>(90);
     assertFalse(isValidAvl(root));
+  }
+
+  @Test
+  public void deeperValidTreeIsValid() {
+    Node<Integer> root = new Node<>(50);
+    root.left = new Node<>(30);
+    root.right = new Node<>(70);
+    root.left.left = new Node<>(20);
+    root.left.right = new Node<>(40);
+    root.right.left = new Node<>(60);
+    root.right.right = new Node<>(80);
+    root.left.left.left = new Node<>(10);
+    assertTrue(isValidAvl(root));
   }
 
   @Test
