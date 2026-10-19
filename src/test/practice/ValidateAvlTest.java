@@ -34,7 +34,7 @@ public abstract class ValidateAvlTest {
 
   @Test
   public void orderedButUnbalancedIsInvalid() {
-    // 20 < 30 < 50, but 50 leans left by two levels.
+    // 20 < 30 < 50, but 50 has a balance factor of 2.
     Node<Integer> root = new Node<>(50);
     root.left = new Node<>(30);
     root.left.left = new Node<>(20);
@@ -53,7 +53,7 @@ public abstract class ValidateAvlTest {
 
   @Test
   public void balancedButUnorderedIsInvalid() {
-    // Every node leans by at most one level, but 60 sits in 50's left subtree.
+    // Every node is balanced, but 60 sits in 50's left subtree.
     Node<Integer> root = new Node<>(50);
     root.left = new Node<>(30);
     root.right = new Node<>(70);
@@ -62,8 +62,8 @@ public abstract class ValidateAvlTest {
   }
 
   @Test
-  public void leanestTreeOfHeightThreeIsValid() {
-    // Every internal node leans by one level, the most an AVL tree allows.
+  public void minimalAvlTreeOfHeightThreeIsValid() {
+    // Every internal node has a balance factor of 1 or -1, the most an AVL tree allows.
     Node<Integer> root = new Node<>(50);
     root.left = new Node<>(30);
     root.right = new Node<>(60);
@@ -76,7 +76,7 @@ public abstract class ValidateAvlTest {
 
   @Test
   public void balancedRootWithUnbalancedDescendantIsInvalid() {
-    // The root has two subtrees of height 2, but 30 and 70 each lean by two.
+    // The root has two subtrees of height 2, but 30 has a balance factor of 2 and 70 has -2.
     Node<Integer> root = new Node<>(50);
     root.left = new Node<>(30);
     root.left.left = new Node<>(20);
