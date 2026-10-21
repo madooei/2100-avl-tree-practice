@@ -1,5 +1,7 @@
 package practice;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import list.ArrayList;
 import list.List;
 import org.junit.jupiter.api.Test;
@@ -11,20 +13,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /** Tests for the balance-a-BST problem and its buildBalanced step. */
 public class BalanceBstTest {
 
+  // Calls the private buildBalanced through reflection, so the tests can
+  // check the rebuild step without making the helper public.
+  @SuppressWarnings("unchecked")
+  private static Node<Integer> buildBalanced(List<Integer> sorted) {
+    try {
+      Method method = BalanceBst.class.getDeclaredMethod("buildBalanced", List.class);
+      method.setAccessible(true);
+      return (Node<Integer>) method.invoke(null, sorted);
+    } catch (InvocationTargetException e) {
+      throw new IllegalStateException("buildBalanced threw " + e.getCause());
+    } catch (ReflectiveOperationException e) {
+      throw new IllegalStateException("BalanceBst has no buildBalanced(List)");
+    }
+  }
+
   @Test
   public void buildBalancedOfEmptyListIsEmptyTree() {
-    assertNull(BalanceBst.buildBalanced(new ArrayList<Integer>()));
+    assertNull(buildBalanced(new ArrayList<Integer>()));
   }
 
   @Test
   public void buildBalancedPicksTheMiddleAsRoot() {
-    Node<Integer> root = BalanceBst.buildBalanced(range(20, 80, 10));
+    Node<Integer> root = buildBalanced(range(20, 80, 10));
     assertEquals(50, root.value);
   }
 
   @Test
   public void buildBalancedPicksTheMiddleOfEachHalfAsChild() {
-    Node<Integer> root = BalanceBst.buildBalanced(range(20, 80, 10));
+    Node<Integer> root = buildBalanced(range(20, 80, 10));
     assertEquals(30, root.left.value);
     assertEquals(70, root.right.value);
   }
@@ -32,13 +49,13 @@ public class BalanceBstTest {
   @Test
   public void buildBalancedKeepsTheSortedOrder() {
     List<Integer> sorted = range(20, 80, 10);
-    assertSameValues(sorted, inOrder(BalanceBst.buildBalanced(sorted)));
+    assertSameValues(sorted, inOrder(buildBalanced(sorted)));
   }
 
   @Test
   public void buildBalancedIsBalancedForEverySize() {
     for (int n = 1; n <= 40; n++) {
-      Node<Integer> root = BalanceBst.buildBalanced(range(1, n, 1));
+      Node<Integer> root = buildBalanced(range(1, n, 1));
       assertTrue(isBalanced(root), "n = " + n);
     }
   }
@@ -46,7 +63,7 @@ public class BalanceBstTest {
   @Test
   public void buildBalancedHasTheSmallestHeightForEverySize() {
     for (int n = 1; n <= 40; n++) {
-      Node<Integer> root = BalanceBst.buildBalanced(range(1, n, 1));
+      Node<Integer> root = buildBalanced(range(1, n, 1));
       assertEquals(floorLog2(n), height(root), "n = " + n);
     }
   }
