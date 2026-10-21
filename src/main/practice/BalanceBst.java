@@ -13,7 +13,7 @@ public final class BalanceBst {
   // Returns the root of a height-balanced binary search tree that holds
   // exactly the values in sorted, which must be in ascending order. An empty
   // list gives the empty tree.
-  public static <T> Node<T> buildBalanced(List<T> sorted) {
+  private static <T> Node<T> buildBalanced(List<T> sorted) {
     // TODO: Implement me
     throw new UnsupportedOperationException("TODO: Implement me");
   }
