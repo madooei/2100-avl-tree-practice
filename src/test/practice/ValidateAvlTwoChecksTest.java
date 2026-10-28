@@ -7,6 +7,6 @@ public class ValidateAvlTwoChecksTest extends ValidateAvlTest {
 
   @Override
   protected boolean isValidAvl(Node<Integer> root) {
-    return ValidateAvl.isValidAvlTwoChecks(root);
+    return ValidateAvlTwoChecks.isValidAvl(root);
   }
 }

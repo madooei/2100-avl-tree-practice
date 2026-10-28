@@ -18,7 +18,8 @@ code/
   src/
     main/
       practice/
-        ValidateAvl.java                # is a binary tree a valid AVL tree?
+        ValidateAvlTwoChecks.java       # is a binary tree a valid AVL tree? (two checks)
+        ValidateAvlOnePass.java         # is a binary tree a valid AVL tree? (one pass)
         BalanceBst.java                 # rebuild a BST as a balanced one
       tree/
         Node.java                       # the binary-tree node from the tree chapter
@@ -44,7 +45,7 @@ There is no demo program for these problems; the tests are how you check your wo
 
 ## What's here
 
-- `practice.ValidateAvl` — `isValidAvl`, which returns whether a binary tree satisfies both the binary search tree ordering property and the AVL balance property at every node. `isValidAvlTwoChecks` answers the same question with two separate checks. The empty tree is valid, and a tree with a duplicate value is not.
+- `practice.ValidateAvlTwoChecks` and `practice.ValidateAvlOnePass` — two solutions of `isValidAvl`, which returns whether a binary tree satisfies both the binary search tree ordering property and the AVL balance property at every node. The first runs a separate check for each property. The second checks both in one pass. The empty tree is valid, and a tree with a duplicate value is not.
 - `practice.BalanceBst` — `balance`, which rebuilds any binary search tree as a height-balanced one holding the same values. It uses a private helper, `buildBalanced`, which builds a height-balanced binary search tree from a sorted list. The tests call that helper through reflection.
 - `tree.Node<T>` — the binary-tree node from the tree chapter, with a value and a left and a right child. It is a copy, included so this code compiles and runs on its own.
 - `list.List<T>` and `list.ArrayList<T>` — the List ADT and its array-backed implementation, copied so this code compiles and runs on its own. `balance` uses a list to hold the values between flattening and rebuilding.

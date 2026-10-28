@@ -7,6 +7,6 @@ public class ValidateAvlOnePassTest extends ValidateAvlTest {
 
   @Override
   protected boolean isValidAvl(Node<Integer> root) {
-    return ValidateAvl.isValidAvl(root);
+    return ValidateAvlOnePass.isValidAvl(root);
   }
 }
