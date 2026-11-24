@@ -47,7 +47,7 @@ code/
 - `scripts/test.sh practice.ValidateAvlOnePassTest` — compiles everything and runs only that test class. Use this while you are working on one solution and the others are still empty.
 - `scripts/run.sh demo.ValidateAvlOnePassDemo` — compiles everything and runs that one demo. Every class you implement has its own demo, `<Class>Demo`.
 
-## What's here
+## Contents
 
 - `practice.ValidateAvlTwoChecks` and `practice.ValidateAvlOnePass` — two solutions of `isValidAvl`, which returns whether a binary tree satisfies both the binary search tree ordering property and the AVL balance property at every node. The first runs a separate check for each property. The second checks both in one pass. The empty tree is valid, and a tree with a duplicate value is not.
 - `practice.BalanceBst` — `balance`, which rebuilds any binary search tree as a height-balanced one holding the same values. It uses a private helper, `buildBalanced`, which builds a height-balanced binary search tree from a sorted list. The tests call that helper through reflection.
