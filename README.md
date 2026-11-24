@@ -26,6 +26,10 @@ code/
       list/
         List.java                       # the List ADT
         ArrayList.java                  # an array-backed List
+      demo/                             # one demo per solution class
+        ValidateAvlTwoChecksDemo.java
+        ValidateAvlOnePassDemo.java
+        BalanceBstDemo.java
     test/
       practice/
         ValidateAvlTest.java            # the validate-AVL scenarios (abstract)
@@ -34,14 +38,14 @@ code/
         BalanceBstTest.java
   scripts/
     test.sh                             # compile and run the JUnit tests
+    run.sh                              # compile and run one demo
 ```
 
 ## How to compile and run
 
 - `scripts/test.sh` — compiles everything and runs the full JUnit suite.
 - `scripts/test.sh practice.ValidateAvlOnePassTest` — compiles everything and runs only that test class. Use this while you are working on one solution and the others are still empty.
-
-There is no demo program for these problems; the tests are how you check your work.
+- `scripts/run.sh demo.ValidateAvlOnePassDemo` — compiles everything and runs that one demo. Every class you implement has its own demo, `<Class>Demo`.
 
 ## What's here
 
@@ -50,3 +54,4 @@ There is no demo program for these problems; the tests are how you check your wo
 - `tree.Node<T>` — the binary-tree node from the tree chapter, with a value and a left and a right child. It is a copy, included so this code compiles and runs on its own.
 - `list.List<T>` and `list.ArrayList<T>` — the List ADT and its array-backed implementation, copied so this code compiles and runs on its own. `balance` uses a list to hold the values between flattening and rebuilding.
 - `practice.ValidateAvlTest`, `practice.ValidateAvlTwoChecksTest`, `practice.ValidateAvlOnePassTest`, and `practice.BalanceBstTest` — tests for the two problems. `ValidateAvlTest` holds the scenarios, and each subclass runs them against one solution.
+- `demo.ValidateAvlTwoChecksDemo`, `demo.ValidateAvlOnePassDemo`, and `demo.BalanceBstDemo` — one demo per solution class, each on the trees from the notes.
